@@ -1,4 +1,4 @@
-const {MongoClient, ObjectID} = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     //creates a new DB if it doesnt exist but appears when filling it with data
@@ -8,14 +8,21 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     console.log('connected to MongoDB server');
 
     const db = client.db('TodoApp');
-  
-      db.collection('todos').find().toArray().then((docs) => {
-       console.log('todos: ');
-       console.log(JSON.stringify(docs, undefined, 2));
-     }, (err) => {
-         console.log('unable to fetch to Dos', err);
-     }); 
+    // deleteMany 
+    /*      db.collection('Todos').deleteMany({text: 'Eat a döner'}).then((result) => {
+            console.log(result);
+         }); */
 
+    // delteOne (the first u find and then stop)
+    /*   db.collection('Todos').deleteOne({text: 'Eat a döner'}).then((result) => {
+         console.log(result);
+      }); */
+
+
+    //findOneAndDelete
+    db.collection('Todos').findOneAndDelete({ completed: 'Eat a döner' }).then((result) => {
+        console.log(result);
+    });
 
     //client.close();
 
