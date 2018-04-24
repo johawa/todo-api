@@ -12,6 +12,7 @@ var port = 3000;
 //create middleware
 app.use(bodyParser.json());
 
+//todo Route
 app.post('/todos', (req, res) => {
     //console.log(req.body);
     var newTodo = new Todo({
@@ -25,6 +26,20 @@ app.post('/todos', (req, res) => {
     });
 });
 
+//get Route
+app.get('/todos', (req, res) => {
+    Todo.find().then((todos) => {
+        res.send({ todos: todos });
+    }, (e) => {
+        res.status(400).send(e);
+    })
+});
+
+
+
+
 app.listen(port, () => {
     console.log(`server is listenig to ${port}`);
 });
+
+module.exports = { app: app };
