@@ -1,59 +1,30 @@
-var mongoose = require('mongoose');
-var {ObjectID} = require('mongodb');
+var express = require('express');
+var bodyParser = require('body-parser');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+var { mongoose } = require('./db/mogoose');
+var { Todo } = require('./models/todo');
+var { User } = require('./models/user');
 
-//create Model
-var Todo = mongoose.model('Todo', {
-    text: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true  //removes whitespace
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    },
-    completedAt: {
-        type: Number,
-        default: null        
-    }
+//Init express
+var app = express();
+var port = 3000;
+
+//create middleware
+app.use(bodyParser.json());
+
+app.post('/todos', (req, res) => {
+    //console.log(req.body);
+    var newTodo = new Todo({
+        text: req.body.text
+    });
+
+    newTodo.save().then((doc) => {
+        res.send(doc);
+    }, (e) => {
+        res.status(400).send(e);
+    });
 });
 
-/* 
-//creating an Instance
-var newTodo = new Todo({
-  text: 'straße kehren'
+app.listen(port, () => {
+    console.log(`server is listenig to ${port}`);
 });
-
-//fill Model with a Instance, with error handling 
-newTodo.save().then((doc) => {
-    console.log('Saved todo', doc);
-}, (e) => {
-    console.log('unable to save todo');
-});
- */
-
-//create User Model
-var User = mongoose.model('User', {
-    email: {
-        type: String,
-        required: true,
-        minlength: 1,
-        trim: true  //removes whitespace
-    }
-});
-
-var newUser = new User({
-    email: 'johannes.walenta@gmail.com'
-});
-
-newUser.save().then((doc) => {
-    console.log('Saved todo', doc);
-}, (e) => {
-    console.log('unable to save todo');
-});
-
-
