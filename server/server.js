@@ -100,7 +100,7 @@ app.patch('/todos/:id', (req, res) => {
             return res.status(404).send();
         }
         res.send({ todo });
-        
+
     }).catch((e) => {
         res.send(400).send();
     })
@@ -108,6 +108,21 @@ app.patch('/todos/:id', (req, res) => {
 
 });
 
+
+// create new User 
+
+
+app.post('/user', (req, res) => {
+    var body = _.pick(req.body,['email', 'password']);     
+    //console.log(req.body);
+    var newUser = new User(body);
+
+    newUser.save().then((user) => {
+        res.send(user);
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
 
 
 
