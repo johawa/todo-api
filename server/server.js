@@ -8,7 +8,9 @@ var { User } = require('./models/user');
 
 //Init express
 var app = express();
-var port = 3000;
+
+var port = process.env.PORT || 3000;
+//process.env.PORT 4 heroku
 
 //create middleware
 app.use(bodyParser.json());
