@@ -124,11 +124,9 @@ app.post('/user', (req, res) => {
     })
 });
 
-
 app.get('/users/me', authenticate, (req, res) => {
-    res.send(req.user);
+    res.send(req.user);    
 });
-
 
 app.listen(port, () => {
     console.log(`server is listenig to ${port}`);
