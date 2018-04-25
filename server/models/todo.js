@@ -14,22 +14,13 @@ var Todo = mongoose.model('Todo', {
     completedAt: {
         type: Number,
         default: null
+    },
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 
-
-/* //creating an Instance
-var newTodo = new Todo({
-  text: 'straße kehren'
-});
-
-//fill Model with a Instance, with error handling 
-newTodo.save().then((doc) => {
-    console.log('Saved todo', doc);
-}, (e) => {
-    console.log('unable to save todo');
-});
- */
 
 module.exports = {
     Todo: Todo
